@@ -45,21 +45,21 @@ def main():
     lastId="0"
     sum = 0
     f = open("contents.txt","a+",encoding="utf-8")
-    for i in range(0,1024):
+    for i in range(0,1300):
         html = get_content(source,lastId)
         #获取评论数据
         commentlist=get_comment(html)
+        print("正在获取第"+str(i)+"页评论")
+        if (len(commentlist)<1):
+            break
         for j in commentlist:
             j = j.replace("\n","")
             f.write(j)
             f.write("\n")
         sum += len(commentlist)
-        if (sum ==12707):
-            return
-        
         #获取下一轮刷新页ID
         lastId=get_lastId(html)
         source += 1
-    print(sum)
+    print("获取完成")
         
 main()
