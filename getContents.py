@@ -43,7 +43,6 @@ def main():
     source=1613549142009
     #初始待刷新页面ID
     lastId="0"
-    sum = 0
     f = open("contents.txt","a+",encoding="utf-8")
     for i in range(0,1300):
         html = get_content(source,lastId)
@@ -56,7 +55,6 @@ def main():
             j = j.replace("\n","")
             f.write(j)
             f.write("\n")
-        sum += len(commentlist)
         #获取下一轮刷新页ID
         lastId=get_lastId(html)
         source += 1
