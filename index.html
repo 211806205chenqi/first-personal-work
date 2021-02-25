@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>腾讯视频《在一起》评论</title>
+    <script type="text/javascript" src="./echarts.js"></script>
+    <script type="text/javascript" src="./echarts-wordcloud.min.js"></script>
+    <script src="jquery-3.5.1.js"></script>
+
+</head>
+<body>
+<div id="main" style="width: 700px; height: 500px"></div>
+<script>
+
+    onload = function () {
+        $.getJSON("http://localhost:8000/word.json", "", function (res) {
+            var data = {
+                value: res,
+                image: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOQAAADICAYAAAD4OU3AAAARVElEQVR4Xu2dB5AtRRWGP1QEySAYEEmigChiFhBEQaRERBHLWJhRTEjOOWdEySYsxUCSUlFEUYmWggjqMysqWChaRiSUqf7nXGrfsncndff0zPxddWvfq+0+5/TX/W/Pnek+sxguJmAC2RBYLJtIHIgJmAAWpCeBCWREwILMaDAcigmMVZBrAvqsMuPziBn/njYz7gBuBX5d/NS/9bnHU2khgSULrhO+axT/f9Q8fO4E9PlD8XPy/wnbUaEduiC3AJ43a5JosoQuPwa+M+vz79BOMrP3YOCZsz7rRYhxIszJzyuA6yL4ycLk0AS5GaDP5sXPpTqk/F3gi8DnC6F2GEow12L7YmBr4GnBrNY39A9Awrwa+BZwfX0TebYYgiA3BHYEXgE8MU/MCy9rJcyvF5+/ZBrn7LBWLMQnAeqzWqZxLwAuAi4Ebsk0xkph9VWQD5shwu0r9TSfSr8HPll8tIrmWLT6va74PDLHAOeJ6dIZ4ry7Z7H37rHHBsUkeU3xvbBvvGfH+5lCmFo9cyjbFXxflUMwLWPQVcmnCr4/bGkrWfO+rJAvmvEX+0HJ6KRzdC3wceCcdC4X8bQzsBOwaUf+Y7r9z4wrkstjOgphO3dBvrkQ4gtCdLYHNm4sRJlKmBKiPk/vAZsQIV5ZiPMjIYzFsJGrIPWoYl9gmxid7oHN2MIcmxBnD/mXgWOBb+Y2F3IT5ArAfsDeuYHqKB4J80jgc4H8vww4cEQrYhm244FjgGzueuckyNcWYnxSGcUR/v5U4LAWE0d/6A4B3jdCdmVd/kEhyvPLKqb4fQ6CXAY4AXhHig732Mf3ClHWXS21KkqMG/W47ylCPwvYC9Cmg85K14LcpBCjfrpUI6DVcn+g7Bmbdikd5VWxGtSilrbkSZSdbc3rUpBaEbUyaoV0qUdAO352Bb4/pZlWQwlXN8dc6hHQCilRasVMXroQpJ4jnu5L1NZj/ZtClLMvYfVQ/8SMt7m17ngiAxKkvnPfm8jfQjepBbk08AlA32tcwhDQX3MJUEV3qI8OY9ZWgK8Wz2l/lYpGSkGuXOwx1EkMl7AEzgZ05fG2sGZtDdDROnG9JgWNVIJcHbgJWClFp+zDBAIT0PfKtwLaexy1pBDkUwDdsncxgb4T2AM4OWYnYgtSJ/Z1R9DFBIZCQCeNPh2rMzEFaTHGGjXb7ZKAdvbopuQvYgQRS5AWY4zRss1cCGhTukQZfA9sDEHqYbSejWn/pIsJDJXAJcAOoTsXWpDaGC4xPi50oLZnAhkS+FDoR02hBaksa8pK5mICYyGgI1z7hOpsSEHqRMGhoQKzHRPoEQEd+D43RLyhBKlVUaujiwmMkcAfga2Am9t2PoQgtSVOe/60AcDFBMZK4DJg27adDyFIJWTyHsq2I+H2QyCgr2zK7NC4tBWkjvpE27XQuFduaALdEdAqqdWyUWkjyCUA5RMdSwrBRoDdaHQEdIhC+W3LMjrMCaaNIA8oMqKNjrg7bAIlBA4GjmhCqakg9VIbrY7ejdOEutsMncDfi1VyWoqVqf1vKsiPAm8cOlX3zwRaENCrId5Qt30TQb6keLVaXV+ubwJjI/DyukmumwjyYkCOXEzABOYnoHSStV5gVFeQWxabADwQJmAC1Qi8vnjBT6XadQWpF40q5b+LCZhANQJfqnPgoo4glV1cd1ZdTMAE6hF4PvCNKk3qCPLDgN7X6GICJlCPQOVzk1UF+QTgJ/VicG0TMIGCgHbtbAj8vIxIVUHuFjv9XVmg/r0J9JxApY3nVQX5NWAsrxXv+bg7/EwJ3AA8syy2KoJ0ouMyiv69CVQjoNdoXD1f1SqC9CbyarBdywTKCJTm36kiSO022LjMk39vAiZQSuCHgDIzTi1lglwfWFDqxhVMwASqEtgGuHxa5TJB6kSHTna4mIAJhCFwErBnU0GeAewSJg5bMQETKF4+NfWJRdkKqZdVrmuMJmACwQj8db6D/fMJck0g2aucg3XXhkwgfwLPAG6cK8z5BLkTcF7+fXOEJtA7Am8HlD71AWU+QX4QeFfvuuqATSB/AhKjRFlLkN4ul//AOsJ+Evg28Oy6grwdWLWf/XXUJpA1AWWlW66OIJeP8XbYrBE5OBNIS+CxwG2zXU77Dvkc4Pq08dmbCYyKwNbAFVUF+SbgI6PC486aQFoCuwKnVRXk4cBBaeOzNxMYFYEzgXdWFeSJwB6jwuPOmkBaAkp6peRXi5Rp3yG9hzXt4Njb+AjUEqR26GinjosJmEAcArUEeQGwY5w4bNUETKDI01r5kvWLdbItG68JmEBtArVWyK8DW9R24QYmYAJVCdQSpFfIqlhdzwSaEaglyM8Cr2zmx61MwAQqELgM2HZ2vWmPPfyG5ApEXcUEWhC4cK5Fb5ogT59rF0EL525qAiawKIE5X3k+TZBK6LqXCZqACUQjUGvr3CGAXg7iYgImEIfAnOkgp62QPu0RZxBs1QQmBI4ADq56U0d5I5XCw8UETCAOAS16H6sqyHWAn8WJw1ZNwASAZwHfqSrIxYH7jM0ETCAagWWAu6oKUvWc5CraWNjwyAncCqw1F4P58rIqp45y67iYgAmEJTDnLh25mE+Qui27e9g4bM0ETAA4Adi77gqpfXZfMD4TMIHgBHTW+KK6glwZuDN4KDZoAibwaOCOuoJU/WuBTczPBEwgGIF5X2te9n5IXetOfdtrsBBtyATGQ+DDwFundbdMkLrWVX4dFxMwgTAEJEaJcs5SJsiVih07+uliAibQnsAGwIKmglS7TwCvax+HLZjA6Ano2f6892TKVkgRlBglShcTMIF2BA4EjprPRBVB+rK13SC4tQlMCGwE3NxWkL5s9YQygfYErgS2LDNTZYX0ZWsZRf/eBMoJaBvqKWXVqgpyiWKpXbfMoH9vAiYwJwFp56dlbKoKUnb0vki9N9LFBEygHgG9/PgtVZrUEeTawC3A0lUMu44JmMD9BDYFrqvCo44gZe9sYOcqhl3HBExgIYHz6zzHryvIzYCrDNoETKAyga3qJIyrK0hFcSnw0srhuKIJjJfAJcAOdbrfRJDPBa6u48R1TWCkBLare8i/iSDF1uk9RjrD3O3KBJRzVblXa5WmgtSJ52sA3Xl1MQETWJTAXwDdWZ16qmMasKaClL1dgDM8EiZgAg8gULqJPIYgZfMrwAs9ICZgAvcTuLFYHe9twqTNCil/usHzVUBb61xMwATg1cBnmoJoK0j51aZZ3eRxMYGxEzi37caZEILUIHwaeNXYR8P9HzUBnXPUJoA/tqEQSpB6T4EuXX3Xtc1ouG2fCSixuF4R0KqEEqSC0AqpldLFBMZGQG8bPyxEp0MKUvEcDewXIjDbMIGeEJj64pwm8YcWpGI4D9ipSTBuYwI9I/AT4BWAspEHKTEEqcD0fbI0f0iQHtiICXRD4F/AxsANId3HEqRi/BGwXshgbcsEMiKweYxDFjEFKXZ/A5bNCKJDMYEQBLYBLg9haLaN2IKUv//GCNw2TaAjAu+KuYc7hSDl498lb2vuiK3dmkAtAnq0oUcc0UoKQSp4+dGX4AdF64kNm0BcAsq4eEhcF/8XSqoiMd4HPDiVQ/sxgUAEjgAODmRrXjMpBalAJEodS3lIis7ZhwkEIJBMjJNLyQAx1zKhFfJuYPFarVzZBNITOLJIEJ7Mc+oVctIxifKfwEOT9dSOTKAeAb02Tif/k5auBKlO6rL1Losy6XjbWTUC2pN9QLWqYWt1KciJKP/hjANhB9XWWhE4Bti/lYUWjbsWpELXd0nt6FmyRT/c1ARCEDi269NKOQhSIPVdUqnzHhaCqm2YQAMCnYtRMeciyIko/wws1QCmm5hAGwLHAfu2MRCqbU6CVJ+Uve5PfuVdqOG1nQoEjgf2qVAvSZXcBGlRJhl2OykInADsnRONHAUpPrrBcyewTE6wHMugCJwI7JVbj3IV5ESUf/B5ytymzCDiUR7hPXPsSc6CFC/ddb0DWC5HeI6plwROBvbINfLcBSluuuv6O2D5XCE6rt4QyFqMotgHQU5EeTuwQm+G3oHmRuCU4rUXucW1SDx9EaSCXhq4zaLMej7lGtypwG65Bjczrj4JciLK3wIr9gGuY8yCwPuB92URSYUg+iZIdUmPQn4NrFShf64ybgKnAbv2CUEfBTkR5a3Aw/sE27EmJfAB4L1JPQZw1ldBquvK9/pLYOUAHGxiWAR6KUYNQZ8FORHlL4BVhjWf3JsWBD4IvKdF+06b9l2QgqdNAz8DHtEpSTvPgcDpwLtzCKRpDEMQpPquTQM/tSibToNBtDsDUFbxXpehCHIiSr0e7JG9HhEH34TAmcA7mzTMrc2QBCm22smjt249KjfQjicagbOAXaJZT2x4aIKciHIB8OjELO0uPYFBiVH4hihI9Us7eX4ArJp+jthjIgJnA+9I5CuZm6EKciLK7wOPSUbTjlIROAd4eypnKf0MWZDiqO11t1iUKadUdF+DXBkn1IYuyIkobwZWiz5V7CA2gUGLccjfIWdPDO15vQl4bOwZY/vRCAzuBs5cpMawQk76rT2vNwKrR5syNhyLwCjEOKYVcqYobwDWiDVzbDc4gcE89K9CZkwr5ISHNqJ/G1izCiDX6ZTAILbD1SE4RkGKj0VZZ5Z0U3d0YhzjJevMqaXTId8C1upmvtnrPAR6f2qj6eiOdYWc8JIorwfWbgrQ7YITGK0Yx75CTmaSTodcCzwu+NSywboEen24uG5n56o/9hVywkSnQ64G1gkB1TYaERi9GL1CLjpvJMqrgMc3mk5u1IZAb3PgtOm0V8hyejqy9Q3gCeVVXSMQgd6lagzU7znN+JL1gVgsypgzblHbFuMs1hbk3JNP5yivBNZNNzdH56lXGcVTjY4FOZ20RPk1YL1UgzEiPxbjlMG2IOdXgQ43XwGsPyKxxO5qb158ExuEb+o0IyxRfgV4YrPmbjWDgMVYMh28QlbTiw43fxnYoFp115qDQC/ez9j1yFmQ1UdAh5u/ZFFWBzajpsVYEZsFWRFUUU2ivAx4Ur1mo66d/WvEcxodC7L+aCjjwBeAJ9dvOroWJwF7jq7XLTpsQTaDJ1F+HtiwWfNRtLIYGwyzBdkAWtFEaUAuBZ7S3MRgW54I7DXY3kXsmAXZDq5E+Tlgo3ZmBtXaYmwxnBZkC3hFU+XmucSiXEjjBGDv9kjHa8GCDDP2EuXFwFPDmOulFYsxwLBZkAEgFiaUm+dC4GnhTPbG0vHAPr2JNuNALciwg6PcPJ8Fnh7WbNbWjgP2zTrCHgVnQYYfLInygpGslBZj4PljQQYGWphTwiytlEO+fD0W2C8OvvFatSDjjb1EqZVyiDd6LMZI88aCjAS2MKssdlophyTKY4D942Ibr3ULMv7YS5RaKYewecBijDxfLMjIgAvzSi2plbLPojwaOCANrvF6sSDTjb1SS0qUfdz7ajEmmicWZCLQhZs+ivIo4MC0mMbrzYJMP/ZKLamVsg9Ht44EDkqPaLweLchuxl6i1I2enA85W4wdzA0LsgPohUvle9VKmaMojwAO7g7NeD1bkN2OvUSplTKnHD0WY4dzwoLsEH7hWkmYtVLmIMrDgUO6RzLeCCzIPMZeotRK2WXeV4sxg7lgQWYwCEUIyoyulbILUR4GHJoPivFGYkHmNfbakK48pi9NGJaEKEG6ZEDAgsxgEOYIQXtGYx/6vQ3YvbhUzpPCCKOyIPMd9NcXooxxCXt5IcYF+XZ/nJFZkHmP+3LAboV49O+25Srgo8DH2hpy+zgELMg4XENb1Q2fXYDtAOWCrVPuLl48KxFeVKeh66YnYEGmZ97W4zbA9sDGgPL3LDvL4B3ArYBWQ72W/Xrgb22dun0aAhZkGs4xvaxSCPOvhRDvienMtuMSsCDj8rV1E6hFwIKshcuVTSAuAQsyLl9bN4FaBP4HhGfy2GgA1uQAAAAASUVORK5CYII="
+            }
+            var myChart = echarts.init(document.getElementById('main'));
+            var maskImage = new Image();
+            maskImage.src = data.image
+
+            maskImage.onload = function () {
+                myChart.setOption({
+                    backgroundColor: '#fff',
+                    tooltip: {
+                        show: true
+                    },
+                    series: [{
+                        type: 'wordCloud',
+                        gridSize: 2,
+                        sizeRange: [20, 80],
+                        rotationRange: [-90, 90],
+                        rotationStep: 45,
+                        maskImage: maskImage,
+                        textStyle: {
+                            color: function () {
+                                return 'rgb(' + [
+                                    Math.round(Math.random() * 160),
+                                    Math.round(Math.random() * 160),
+                                    Math.round(Math.random() * 160)
+                                ].join(',') + ')';
+                            }
+                        },
+                        emphasis: {
+                        textStyle: {
+                            color: 'red'
+                        }
+                        },
+                        left: 'center',
+                        top: 'center',
+                        right: 'center',
+                        bottom: 'center',
+                        data: data.value
+                    }]
+
+                })
+            }
+        })
+    }
+</script>
+</body>
+</html>
+
